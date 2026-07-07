@@ -1,1 +1,1 @@
-ay que configurar las credenciales de n8n manualmente (Google Drive, Sheets, Qdrant, HuggingFace, Gmail, OpenRouter, Cohere) porque el JSON no las incluye
+hay que configurar las credenciales de n8n manualmente (Google Drive, Sheets, Qdrant, HuggingFace, Gmail, OpenRouter, Cohere) porque el JSON no las incluye
