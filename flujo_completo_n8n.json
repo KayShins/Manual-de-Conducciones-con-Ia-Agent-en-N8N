@@ -1,0 +1,2985 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -432,
+        624
+      ],
+      "id": "d0e03d3a-eb9d-4a22-bfc1-06fb40628fb8",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YDuYkQAEUfvrfeSO",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -688,
+        400
+      ],
+      "id": "5046596f-2e1a-410e-911a-5a3e796f8edd",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "mimeType='application/pdf' and '1rMZ-l2OcdaDF_fH-JWSBuzVCekZmQ2Fk' in parents",
+        "filter": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -448,
+        400
+      ],
+      "id": "416f64fe-ce15-42a9-b906-0f22a54a1417",
+      "name": "Search files and folders",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "YDuYkQAEUfvrfeSO",
+          "name": "Google Drive OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Aqui se busca la carpeta y los archivos mediante una query y despues se descargan los archivos mediante el download file\n",
+        "width": 324
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        544
+      ],
+      "id": "e74122da-1188-4832-be10-85cda8d7b2a0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "Aqui se hace el post hacia llamaParse que es una api de manera gratuita que te permite transformar los pdf a markdown",
+        "width": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        816
+      ],
+      "id": "bbde9d7a-008d-4293-8bd4-b2adb76841f0",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "Aqui se hace el llamado al endpoint de llamaParse para que traer los archivos convertidos en markdown\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        1008
+      ],
+      "id": "560193c0-7403-4d65-8b3f-11fca89b3977",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_1",
+          "mode": "list",
+          "cachedResultName": "Segundo_Intento",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_2/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ new Date().toISOString() }}",
+            "libro": "={{ $json.name }}",
+            "accion": "pdf_descargado",
+            "estado": "exitoso",
+            "detalle": "=PDF descargado exitosamente: {{ $json.name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "libro",
+              "displayName": "libro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "accion",
+              "displayName": "accion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "detalle",
+              "displayName": "detalle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -208,
+        624
+      ],
+      "id": "a34f6216-c7aa-4876-b27c-9a6733feb086",
+      "name": "Log Descarga Archivo",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_1",
+          "mode": "list",
+          "cachedResultName": "Segundo_Intento",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_2/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ new Date().toISOString() }}",
+            "accion": "=pdf_enviado_llamaparse",
+            "libro": "={{ $('Search files and folders').first().json.name }}",
+            "estado": "exitoso",
+            "detalle": "=Job ID generado: {{ $json.id }} - Estado: {{ $json.status }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "libro",
+              "displayName": "libro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "accion",
+              "displayName": "accion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "detalle",
+              "displayName": "detalle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -224,
+        832
+      ],
+      "id": "3fd5f015-f3a4-4cc7-96d2-40dd3fce7f8f",
+      "name": "log de llama parse POST",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_1",
+          "mode": "list",
+          "cachedResultName": "Segundo_Intento",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_2/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ new Date().toISOString() }}",
+            "libro": "={{ $('Search files and folders').first().json.name }}",
+            "accion": "markdown_obtenido",
+            "estado": "exitoso",
+            "detalle": "=Markdown obtenido, caracteres: {{ $json.markdown.length }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "libro",
+              "displayName": "libro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "accion",
+              "displayName": "accion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "detalle",
+              "displayName": "detalle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -192,
+        1040
+      ],
+      "id": "7f9084d2-d44c-4a18-892a-7d687a883302",
+      "name": "LOG REQUEST GET",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_1",
+          "mode": "list",
+          "cachedResultName": "Segundo_Intento",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_2/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ new Date().toISOString() }}",
+            "libro": "={{ $json.libro }}",
+            "accion": "chunks_generados",
+            "estado": "exitoso",
+            "detalle": "=Chunk generado: {{ $json.chunk_id }} del libro {{ $json.libro }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "libro",
+              "displayName": "libro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "accion",
+              "displayName": "accion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "detalle",
+              "displayName": "detalle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        16,
+        1232
+      ],
+      "id": "be43b955-83c4-408d-896c-ebfabac05f3a",
+      "name": "Chunks Generados",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -496,
+        -320
+      ],
+      "id": "500bcd8c-4d5b-4d5f-b3d1-0291ea411bec",
+      "name": "When chat message received",
+      "webhookId": "6d7fbd6d-d41c-496c-95eb-a8ce8469eb8c"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "options": {
+          "systemMessage": "Eres un asistente experto en normativas de conducción de Chile.\nSIEMPRE debes usar la herramienta de búsqueda para responder.\nNUNCA respondas sin consultar la herramienta primero.\n\nTienes acceso a 3 manuales oficiales:\n- clase_a: Manual para vehículos profesionales (camiones, buses)\n- clase_b: Manual para vehículos particulares (autos)\n- clase_c: Manual para motocicletas \ny tambien tienes acceso a libros literarios\nLibros literarios (La Perla, El Túnel, El Fantasma de Canterville)\n\nUsa la herramienta correcta según la pregunta del usuario.\n\nEl manual a consultar es: {{ $json.libro }}\n\nAl final de CADA respuesta escribe:\n📚 Fuente: {{ $json.libro }} - Página [número]\n\nResponde SIEMPRE en español."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1504,
+        -288
+      ],
+      "id": "d834c57e-b55e-4357-8247-c659916327fb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Herramienta obligatoria para buscar información en los manuales de conducción de Chile. Úsala siempre.",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "=manual_{{ $json.libro }}",
+          "mode": "id"
+        },
+        "topK": 5,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        1632,
+        -80
+      ],
+      "id": "8be44cf8-ccc2-4394-87ff-1a4725a98ea4",
+      "name": "Qdrant Vector Store2",
+      "credentials": {
+        "qdrantApi": {
+          "id": "YzlQNkBIIoGKtjpv",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        96
+      ],
+      "id": "e6725245-df07-4160-9476-156e6767c07b",
+      "name": "Embeddings HuggingFace Inference1",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "b0Y2sHx05dOBg6sp",
+          "name": "Hugging Face account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_1",
+          "mode": "list",
+          "cachedResultName": "Segundo_Intento",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ new Date().toISOString() }}",
+            "libro": "={{ $json.name }}",
+            "accion": "archivo_encontrado",
+            "estado": "exitoso",
+            "detalle": "=Archivo encontrado en Drive: {{ $json.name }} - ID: {{ $json.id }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "libro",
+              "displayName": "libro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "accion",
+              "displayName": "accion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "detalle",
+              "displayName": "detalle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -224,
+        400
+      ],
+      "id": "6dd6a38f-f5f6-42d5-b1a3-209f2395b93b",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "manual_clase_a",
+          "mode": "list",
+          "cachedResultName": "manual_clase_a"
+        },
+        "embeddingBatchSize": 768,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -240,
+        1392
+      ],
+      "id": "96cc7f90-0fe4-4260-aa53-853c264e4b72",
+      "name": "Coleccion_clase_a",
+      "credentials": {
+        "qdrantApi": {
+          "id": "YzlQNkBIIoGKtjpv",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "manual_clase_b",
+          "mode": "list",
+          "cachedResultName": "manual_clase_b"
+        },
+        "embeddingBatchSize": 768,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -224,
+        1648
+      ],
+      "id": "1408cb02-4d60-4764-972c-acce4b8cb258",
+      "name": "Coleccion clase b",
+      "credentials": {
+        "qdrantApi": {
+          "id": "YzlQNkBIIoGKtjpv",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "manual_clase_c",
+          "mode": "list",
+          "cachedResultName": "manual_clase_c"
+        },
+        "embeddingBatchSize": 768,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        -240,
+        1936
+      ],
+      "id": "b7c02bc4-ae94-4f3f-99d5-4eff73fe3eb0",
+      "name": "Coleccion clase c",
+      "credentials": {
+        "qdrantApi": {
+          "id": "YzlQNkBIIoGKtjpv",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"timestamp\": \"{{ $json.timestamp }}\",\n  \"mensaje\": \"✅ Proceso de ingesta finalizado correctamente\",\n  \"colecciones_actualizadas\": [\"manual_clase_a\", \"manual_clase_b\", \"manual_clase_c\"],\n  \"estado_final\": \"Completado\"\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1024,
+        1648
+      ],
+      "id": "916b22fe-95a9-4c75-bade-0c403783df35",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.cloud.llamaindex.ai/api/parsing/job/{{ $json.id }}/result/markdown",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -448,
+        1040
+      ],
+      "id": "839d84e1-9e1b-43b2-886b-c2fe93c202a6",
+      "name": "get markdown",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "px4rjMcc0ehfjjIt",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cloud.llamaindex.ai/api/parsing/upload",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "multipart/form-data"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "={{ $binary.data }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -432,
+        832
+      ],
+      "id": "707ccee8-2d7c-48ae-b436-8313b6f32bc7",
+      "name": "Postmarkdown",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "Bv0yVWnjUYKeBWfA",
+          "name": "Header Auth account"
+        },
+        "httpBearerAuth": {
+          "id": "px4rjMcc0ehfjjIt",
+          "name": "Bearer Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "https://YOUR_QDRANT_CLUSTER.aws.cloud.qdrant.io/collections/manual_clase_a",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -576,
+        128
+      ],
+      "id": "1b5adb36-af14-42c6-8bba-9a31396ed9b6",
+      "name": "Eliminar contenido clase_a",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RgtZdkr69dywnvwT",
+          "name": "qdrant-account"
+        },
+        "qdrantApi": {
+          "id": "YzlQNkBIIoGKtjpv",
+          "name": "Qdrant account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst todosLosChunks = [];\n\nfor (const item of items) {\n  const markdown = item.json.markdown;\n  const fileName = item.json.file_name || $('Search files and folders').all()[items.indexOf(item)].json.name;\n  const fileNameLower = fileName.toLowerCase();\n\n  // Determinar qué libro es\n  let libro = '';\n  if (fileNameLower.includes('motocicleta')) {\n    libro = 'clase_c';\n  } else if (fileNameLower.includes('profesional')) {\n    libro = 'clase_a';\n  } else if (fileNameLower.includes('clase_b') || fileNameLower.includes('clase b')) {\n    libro = 'clase_b';\n  } else {\n    libro = fileName.replace('.pdf', '');\n  }\n\n  // Dividir por páginas primero (LlamaParse usa --- como separador de página)\n  const paginas = markdown.split(/\\n---\\n/);\n  \n  let chunkGlobal = 0;\n\n  for (let p = 0; p < paginas.length; p++) {\n    const textoPagina = paginas[p];\n    const palabras = textoPagina.split(' ');\n    const chunkSize = 500;\n\n    for (let i = 0; i < palabras.length; i += chunkSize) {\n      const chunk = palabras.slice(i, i + chunkSize).join(' ');\n      todosLosChunks.push({\n        json: {\n          texto: chunk,\n          libro: libro,\n          archivo: fileName,\n          chunk_id: `${libro}_chunk_${chunkGlobal}`,\n          pagina: p + 1\n        }\n      });\n      chunkGlobal++;\n    }\n  }\n}\n\nreturn todosLosChunks;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -448,
+        1232
+      ],
+      "id": "4e50b890-6d76-4cc4-a755-b6c63d84aea5",
+      "name": "generador de chunks"
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "https://YOUR_QDRANT_CLUSTER.aws.cloud.qdrant.io/collections/manual_clase_b",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -400,
+        128
+      ],
+      "id": "0bc0d578-554d-4bc6-ac6f-b812ea00ae4a",
+      "name": "eliminar contenido clase_b",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RgtZdkr69dywnvwT",
+          "name": "qdrant-account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "https://YOUR_QDRANT_CLUSTER.aws.cloud.qdrant.io/collections/manual_clase_c",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -176,
+        128
+      ],
+      "id": "ff0c3d0d-9e11-42a1-af86-2839a07f6b07",
+      "name": "eliminar contenido clase_c",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "RgtZdkr69dywnvwT",
+          "name": "qdrant-account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "mistralai/ministral-8b-2512",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1472,
+        -64
+      ],
+      "id": "0e8e4499-5f9b-41f4-9484-b85a2175a71e",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "gO4POsCHCSoarbDd",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        1600,
+        48
+      ],
+      "id": "078374bc-d763-49df-9edc-c3f347c85ffa",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_3",
+          "mode": "list",
+          "cachedResultName": "resumen_de_chats",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_3/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_3/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "session_id": "={{ $('When chat message received').item.json.sessionId }}",
+            "pregunta": "={{ $('When chat message received').item.json.chatInput }}",
+            "respuesta": "={{ $json.output }}",
+            "timestamp": "={{ new Date().toISOString() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "pregunta",
+              "displayName": "pregunta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "respuesta",
+              "displayName": "respuesta",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1856,
+        -288
+      ],
+      "id": "1191336c-3e78-44f4-b80f-428933aed264",
+      "name": "Append row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        272,
+        1632
+      ],
+      "id": "82fc85c0-0e77-42d5-a7f6-5971a59fb3b0",
+      "name": "Union de Qdrant"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nlet totalClaseA = 0;\nlet totalClaseB = 0;\nlet totalClaseC = 0;\n\nfor (const item of items) {\n  const pageContent = item.json.pageContent || '';\n  \n  if (pageContent.includes('clase_a')) {\n    totalClaseA++;\n  } else if (pageContent.includes('clase_b')) {\n    totalClaseB++;\n  } else if (pageContent.includes('clase_c')) {\n    totalClaseC++;\n  }\n}\n\nconst fecha = new Date().toLocaleString('es-CL');\n\nreturn [\n  {\n    json: {\n      timestamp: fecha,\n      libro: 'clase_a',\n      accion: 'Ingesta base vectorial Qdrant',\n      estado: 'Completado',\n      detalle: `${totalClaseA} chunks cargados en manuales_clase_a`\n    }\n  },\n  {\n    json: {\n      timestamp: fecha,\n      libro: 'clase_b',\n      accion: 'Ingesta base vectorial Qdrant',\n      estado: 'Completado',\n      detalle: `${totalClaseB} chunks cargados en manuales_clase_b`\n    }\n  },\n  {\n    json: {\n      timestamp: fecha,\n      libro: 'clase_c',\n      accion: 'Ingesta base vectorial Qdrant',\n      estado: 'Completado',\n      detalle: `${totalClaseC} chunks cargados en manuales_clase_c`\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        1648
+      ],
+      "id": "7fcf1b3e-6d9c-4338-bb4a-ff32e56a0be1",
+      "name": "Code para resumir la ingesta"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_1",
+          "mode": "list",
+          "cachedResultName": "Segundo_Intento",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_1/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "timestamp": "={{ $json.timestamp }}",
+            "libro": "={{ $json.libro }}",
+            "accion": "={{ $json.accion }}",
+            "estado": "={{ $json.estado }}",
+            "detalle": "={{ $json.detalle }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "timestamp",
+              "displayName": "timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "libro",
+              "displayName": "libro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "accion",
+              "displayName": "accion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "estado",
+              "displayName": "estado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "detalle",
+              "displayName": "detalle",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        816,
+        1648
+      ],
+      "id": "3152b0c6-77e7-4640-82ce-5a8255e6ef70",
+      "name": "Log de Ingesta",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -48,
+        1792
+      ],
+      "id": "df5b0625-a3a0-4e87-982a-df5866c14b7e",
+      "name": "Data de Clase_b"
+    },
+    {
+      "parameters": {
+        "modelName": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        1792
+      ],
+      "id": "0b30e3b8-5b11-4337-987c-75a9673e0430",
+      "name": "Embeddings clase_b",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "b0Y2sHx05dOBg6sp",
+          "name": "Hugging Face account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        1520
+      ],
+      "id": "d0c1e6c4-8f40-417a-94db-3721124d1066",
+      "name": "Embeddings clase_a",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "b0Y2sHx05dOBg6sp",
+          "name": "Hugging Face account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -80,
+        1504
+      ],
+      "id": "e0e6073e-7999-49a0-ac50-f41e97288434",
+      "name": "Data_clase_a"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -112,
+        2128
+      ],
+      "id": "9c85284e-65c3-42f3-8f05-d254fadfadd4",
+      "name": "Data_clase_c"
+    },
+    {
+      "parameters": {
+        "modelName": "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        2128
+      ],
+      "id": "8dee3c8f-6feb-4abc-8d98-8b0b8392d4f5",
+      "name": "Embeddings clase_c",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "b0Y2sHx05dOBg6sp",
+          "name": "Hugging Face account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "clase_a",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "c9504643-fb1a-457a-93af-45338bd26fe2"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ad4ddf71-ff7b-4c49-9e9b-38804dd964c6",
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "clase_b",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "59b43a8e-5b3c-409a-84b8-f08815d5dd19",
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "clase_c",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -496,
+        1536
+      ],
+      "id": "084a39af-3df0-46fa-8348-270a5140d335",
+      "name": "Enrutador"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Contar chunks por libro\nconst resumen = {};\nfor (const item of items) {\n  const libro = item.json.libro;\n  if (!resumen[libro]) {\n    resumen[libro] = 0;\n  }\n  resumen[libro]++;\n}\n\n// Devolver un item por libro\nreturn Object.entries(resumen).map(([libro, total]) => ({\n  json: {\n    timestamp: new Date().toISOString(),\n    libro: libro,\n    accion: 'chunks_generados',\n    estado: 'exitoso',\n    detalle: `${total} chunks generados para ${libro}`\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        1232
+      ],
+      "id": "2959df06-d4cc-4816-95ef-cafd62799820",
+      "name": "resumen de los chunks por clase"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "3714a182-decb-4d9d-8065-689aaf9ee6f9",
+              "leftValue": "={{ $json.chatInput.toLowerCase() }}",
+              "rightValue": "@",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -304,
+        -320
+      ],
+      "id": "71a6fda5-6714-4b42-bd27-505746de78aa",
+      "name": "If para ver si viene un @"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    chatInput: $input.first().json.chatInput\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -112,
+        -288
+      ],
+      "id": "361f39b6-6863-44e5-8e11-1ba8cb4db7a7",
+      "name": "Code para traer lo que se ingresa en el chat"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://fibonhacci-bert-conduccion-chile.hf.space/clasificar",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"texto\": \"{{ $json.chatInput }}\" }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        240,
+        -288
+      ],
+      "id": "18883a09-45bf-45d3-9b46-0d35ef94727f",
+      "name": "Post para modelo bert"
+    },
+    {
+      "parameters": {
+        "jsCode": "const chatInput = $input.first().json.texto;\nconst clasificacion = $input.first().json;\nlet libro = clasificacion.libro;\nconst confianza = clasificacion.confianza;\n\nif (confianza < 85) {\n  const texto = chatInput.toLowerCase();\n  if (texto.includes('moto') || texto.includes('motocicleta') || \n      texto.includes('casco') || texto.includes('dos ruedas')) {\n    libro = 'clase_c';\n  } else if (texto.includes('camion') || texto.includes('camión') || \n             texto.includes('bus') || texto.includes('carga') ||\n             texto.includes('profesional') || texto.includes('transporte')) {\n    libro = 'clase_a';\n  } else if (texto.includes('auto') || texto.includes('particular') || \n             texto.includes('documentos') || texto.includes('liviano') ||\n             texto.includes('conducir un')) {\n    libro = 'clase_b';\n  }\n}\n\nreturn [{\n  json: {\n    chatInput: chatInput,\n    libro: libro,\n    confianza: confianza\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -288
+      ],
+      "id": "f33ea206-c128-43b9-a8d4-af37e3bcd24e",
+      "name": "Aplicar filtros"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "clase_a",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "5238c5c1-b2e4-4e5c-b9ef-5105b7a79e8f"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "95468def-e14c-427a-bfe6-119ad4c9a119",
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "clase_b",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "2840a491-2b7d-48a3-8eb9-447956d1242c",
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "clase_c",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        608,
+        -304
+      ],
+      "id": "a59d23a4-a888-4f8e-9bb0-20fe409af34b",
+      "name": "Enrutador1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "08a61d5c-1f56-4dbc-84f5-f00ad68f7f89",
+              "name": "=chatInput",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "c31ae3d7-1f1f-426c-8a0e-4c77269ec489",
+              "name": "contexto_adicional",
+              "value": "Busca SOLO en el manual clase_a de vehículos profesionales (camiones, buses).",
+              "type": "string"
+            },
+            {
+              "id": "722730f8-bf01-4075-9d77-3aac37d8b4d8",
+              "name": "libro",
+              "value": "={{ $json.libro }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        832,
+        -528
+      ],
+      "id": "ac4e91cd-a19e-47a0-a363-0699358b0066",
+      "name": "Clase_a"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "faf7f212-2a16-4e11-8eba-a318ca64e228",
+              "name": "=chatInput",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "a26628c4-d53e-4d3a-9840-51eebf6066d8",
+              "name": "contexto_adicional",
+              "value": "Busca SOLO en el manual clase_b de vehículos particulares (autos).",
+              "type": "string"
+            },
+            {
+              "id": "3337e0d1-d8ff-444b-9bc9-d45bdad3d7eb",
+              "name": "libro",
+              "value": "={{ $json.libro }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        848,
+        -352
+      ],
+      "id": "840a494c-34dc-44a5-a734-c8fda839c72e",
+      "name": "Clase_b"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16604a87-2921-4507-9666-75c503717798",
+              "name": "chatInput",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "cffad130-a259-4358-92fd-3e2d34fdc6bc",
+              "name": "contexto_adicional",
+              "value": "Busca SOLO en el manual clase_c de motocicletas.",
+              "type": "string"
+            },
+            {
+              "id": "04c6abc4-5323-4ec9-8d68-191ef2d78a51",
+              "name": "libro",
+              "value": "={{ $json.libro }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        848,
+        -224
+      ],
+      "id": "aa91fda1-2386-4d40-b2aa-3abb634cf112",
+      "name": "Clase_c"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_3",
+          "mode": "list",
+          "cachedResultName": "resumen_de_chats",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_3/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=historial_chat",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "session_id",
+              "lookupValue": "={{ $json.sessionId }}"
+            }
+          ]
+        },
+        "options": {
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        64,
+        -512
+      ],
+      "id": "5c45c0de-74a0-4d5a-aff5-91963e2e2539",
+      "name": "Trae los datos del Historial",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const respuesta = $('Trae los datos del Historial').item.json.respuesta;\nconst email = $('Code javscript').item.json.email;\nconst pregunta = $('Trae los datos del Historial').item.json.pregunta;\n\n// Limpiar markdown y convertir a HTML\nconst limpiar = (texto) => {\n  return texto\n    .replace(/#{1,6}\\s/g, '')        // quitar ###\n    .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')  // negrita\n    .replace(/\\*(.*?)\\*/g, '<em>$1</em>')  // cursiva\n    .replace(/\\n\\n/g, '</p><p>')     // párrafos\n    .replace(/\\n/g, '<br>')          // saltos de línea\n    .replace(/---/g, '<hr>');        // líneas horizontales\n};\n\nconst respuestaHTML = `\n<html>\n<body style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;\">\n  <h2 style=\"color: #2c3e50;\">Resumen de tu consulta</h2>\n  <div style=\"background: #f8f9fa; padding: 15px; border-radius: 5px;\">\n    <strong>Pregunta:</strong>\n    <p>${pregunta}</p>\n  </div>\n  <div style=\"margin-top: 20px;\">\n    <strong>Respuesta:</strong>\n    <p>${limpiar(respuesta)}</p>\n  </div>\n  <hr>\n  <p style=\"color: #888; font-size: 12px;\">Asistente de Manuales de Conducción Chile</p>\n</body>\n</html>`;\n\nreturn [{\n  json: {\n    email: email,\n    html: respuestaHTML,\n    pregunta: pregunta\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        272,
+        -512
+      ],
+      "id": "4e433871-7c05-453c-bb07-2c2eba6f38c6",
+      "name": "Codigo para limpiar el resumen"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "Resumen consulta - Manual de Conducción Chile",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        528,
+        -512
+      ],
+      "id": "25b2fbcc-f8f8-4c0b-b14d-cf2d0cb7dc74",
+      "name": "Envio al correo",
+      "webhookId": "4223160e-3c19-486e-b6eb-4a1498d4e343",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "6ZYBoImRgSzfSIKJ",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const mensaje = $input.first().json.chatInput;\n\n// Extraer email\nconst emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}/;\nconst match = mensaje.match(emailRegex);\nconst email = match ? match[0] : null;\n\n// Tomar sessionId para identificar la sesión\nconst sessionId = $input.first().json.sessionId;\n\nreturn [{\n  json: {\n    email: email,\n    sessionId: sessionId,\n    respuesta: 'Ver conversación anterior en el chat',\n    pregunta: mensaje\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -144,
+        -512
+      ],
+      "id": "457dce68-c7ca-45d5-a629-252714c125e5",
+      "name": "Code javscript"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        -768
+      ],
+      "id": "b3b86b72-d479-4e49-b8ac-87d35dee4c35",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_3",
+          "mode": "list",
+          "cachedResultName": "resumen_de_chats",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_3/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "historial_chat",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID_3/edit#gid=0"
+        },
+        "numberToDelete": 1000
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        -768
+      ],
+      "id": "8dc8dc38-94e1-49df-9d87-b999307b826e",
+      "name": "Delete rows or columns from sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1BURHgl4k4hamytU",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "Estos request son para limpiar las colecciones del qdrant",
+        "height": 96,
+        "width": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        0
+      ],
+      "id": "ccd441a7-d7e3-4026-8756-08dec5f5c11b",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "Se generan los chunks y tambien se hacen un resumen por clase\n"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        1216
+      ],
+      "id": "32f9aedc-5530-4511-82d1-77fe6216466b",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "enrutador para hacer la ingesta correspondiente del libro dependiendo de que clase es"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -816,
+        1488
+      ],
+      "id": "ecf79962-3c60-42d8-b93f-5e297f5873b1",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "aqui unimos la data para luego resuimirla "
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        208,
+        1456
+      ],
+      "id": "83139d70-e521-472f-8fec-573d68abfbd6",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "este if dice si va para el chat o envia la ultima respuesta al correo como respaldo\n",
+        "height": 144,
+        "width": 182
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -480
+      ],
+      "id": "cf877d10-b168-4156-97bf-fd3baa69aa1a",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "codigo de javscript para traer lo que se ingresa en el chat\n",
+        "height": 80,
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        -128
+      ],
+      "id": "01c7d656-b64e-48e8-ad26-5ca6681ecd9e",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "aqui enviamos el post para el modelo bert subido en FastApi\n",
+        "height": 80,
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        176,
+        -368
+      ],
+      "id": "31a2f392-68d5-4829-86f6-819a149dca55",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "Se aplican los filtros\n",
+        "height": 80,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -368
+      ],
+      "id": "edd1bedd-b922-4285-b4e7-588a178e27d7",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "Enrutador que clasifica",
+        "height": 80,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        576,
+        -384
+      ],
+      "id": "4da9e435-fa0c-4a1e-89fc-88410fc87221",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {
+        "content": "clases\n",
+        "height": 80,
+        "width": 150
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1024,
+        -240
+      ],
+      "id": "fe473a35-51d1-4c72-9b89-3dffdf3b522b",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "Aqui se hace la consulta por la ia en qdrant vector 2",
+        "height": 96,
+        "width": 176
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1488,
+        -416
+      ],
+      "id": "fcb9edcd-fcb7-4035-8aba-fa4c9a0cbbc5",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Busca información en los libros literarios: La Perla, El Túnel y El Fantasma de Canterville\n",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "cargalibro",
+          "mode": "list",
+          "cachedResultName": "cargalibro"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        1968,
+        -96
+      ],
+      "id": "d837c369-fb55-43fe-a461-2c1de119f161",
+      "name": "Qdrant Vector Store",
+      "credentials": {
+        "qdrantApi": {
+          "id": "ALcRviWrKyYNTOIC",
+          "name": "Api key_vicente"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "sentence-transformers/all-minilm-l6-v2",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsHuggingFaceInference",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        112
+      ],
+      "id": "2f12a1a3-012c-400b-9679-e4f02bfad0a5",
+      "name": "Embeddings HuggingFace Inference",
+      "credentials": {
+        "huggingFaceApi": {
+          "id": "b0Y2sHx05dOBg6sp",
+          "name": "Hugging Face account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "bcade1f8-08ea-4072-b514-e8f86f16af4a",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "moto",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "df42e74c-69cf-4605-8d21-00b120e0eefc",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "camion",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "807096aa-ebd2-4d99-b2d3-6751f33d487e",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "=auto",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "2318d772-3184-44d7-92ce-10773b5c84bb",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "camión",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "f0d21ee8-1e48-4cd5-99d8-abc3b3a64105",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "bus",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "d043946d-a4ce-45a7-8d28-3f5b23f637e8",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "licencia",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            },
+            {
+              "id": "718c58b0-6668-49f0-8948-a8433779c622",
+              "leftValue": "={{ $json.chatInput }}",
+              "rightValue": "volante",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        48,
+        -240
+      ],
+      "id": "b1f8d3c7-adab-441b-b4f1-d63a09b431c1",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://snowly17-api.hf.space/predict",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"texto\": \"{{ $json.chatInput }}\" }",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        224,
+        -112
+      ],
+      "id": "92c6af98-b359-4afc-955e-8bd86d24942b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const clase = $input.first().json.clase;\n\nconst mapeo = {\n  2: 'la_perla',\n  1: 'el_tunel',\n  0: 'el_fantasma_de_canterville'\n};\n\nconst libro = mapeo[clase] !== undefined ? mapeo[clase] : 'la_perla';\n\nreturn [{\n  json: {\n    chatInput: $('When chat message received').first().json.chatInput,\n    libro: libro,\n    confianza: 100\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        -80
+      ],
+      "id": "6f4ba9a2-56f3-4058-b226-c9685ab265ac",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "la_perla",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "70e2f9e2-56a3-44cb-a843-2d1e5f4e59f0"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "699d8f4f-5d29-47c9-969b-f2e4858c7ea8",
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "el_tunel",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5803bcd6-f59a-47bb-a096-d41df04d8ca5",
+                    "leftValue": "={{ $json.libro }}",
+                    "rightValue": "el_fantasma_de_canterville",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        672,
+        -32
+      ],
+      "id": "e59e88ee-996d-4010-9d73-70d9f0f47734",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "49e7a158-3af9-411c-8d9c-6927b963e683",
+              "name": "chatInput",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "bc467958-04e5-4d80-9445-3da810255028",
+              "name": "libro",
+              "value": "={{ $json.libro }}",
+              "type": "string"
+            },
+            {
+              "id": "d35135a0-f1a4-47a3-b7d5-1042e7d9b508",
+              "name": "contexto_adicional",
+              "value": "Busca SOLO en el libro la_perla",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -64
+      ],
+      "id": "a713e4e6-e102-4e6c-9489-78417c7dd860",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3adb22d2-f26e-456a-b9ee-d108d3887629",
+              "name": "chatInput",
+              "value": "={{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "a6a78042-3e7d-42ad-aa3c-34fa33a0aeed",
+              "name": "libro",
+              "value": "={{ $json.libro }}",
+              "type": "string"
+            },
+            {
+              "id": "448a0777-5642-494e-a568-08d5c3c5e5db",
+              "name": "contexto_adicional",
+              "value": "Busca SOLO en el libro el_tunel ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        896,
+        112
+      ],
+      "id": "05895247-e4b9-46e0-b5f0-c1c2128bae43",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "761a16bc-7317-42c4-ae38-e8cf9106a59c",
+              "name": "chatInput",
+              "value": "{{ $json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "9824cbb5-6418-42f1-97f0-fbeeed3a54bd",
+              "name": "libro",
+              "value": "={{ $json.libro }}",
+              "type": "string"
+            },
+            {
+              "id": "3be261d8-7470-46ce-8659-0db4562e96d0",
+              "name": "contexto_adicional",
+              "value": "Busca SOLO en el libro el_fantasma_de_canterville",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        288
+      ],
+      "id": "e58be427-b602-4e23-9118-95263c845f42",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Busca información en los libros literarios: El_origen_de_las_especies, la_republica, arte de la guerra",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "libros_rag",
+          "mode": "list",
+          "cachedResultName": "libros_rag"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1.3,
+      "position": [
+        2160,
+        -192
+      ],
+      "id": "3fc56a33-5658-4a83-90b0-6fd999a22f89",
+      "name": "Qdrant Vector Store1",
+      "credentials": {
+        "qdrantApi": {
+          "id": "mPtuttBmAwvlft27",
+          "name": "Qdrant account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "embed-multilingual-v3.0"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsCohere",
+      "typeVersion": 1,
+      "position": [
+        2272,
+        -64
+      ],
+      "id": "3070a6d9-e28b-4e21-9729-820fb18342ef",
+      "name": "Embeddings Cohere",
+      "credentials": {
+        "cohereApi": {
+          "id": "jL5BLiVzc9DTonkS",
+          "name": "Cohere account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Postmarkdown",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log Descarga Archivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Search files and folders",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Eliminar contenido clase_a",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "eliminar contenido clase_b",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "eliminar contenido clase_c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search files and folders": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "If para ver si viene un @",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store2": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings HuggingFace Inference1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chunks Generados": {
+      "main": [
+        []
+      ]
+    },
+    "Coleccion_clase_a": {
+      "main": [
+        [
+          {
+            "node": "Union de Qdrant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Coleccion clase b": {
+      "main": [
+        [
+          {
+            "node": "Union de Qdrant",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Coleccion clase c": {
+      "main": [
+        [
+          {
+            "node": "Union de Qdrant",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        []
+      ]
+    },
+    "get markdown": {
+      "main": [
+        [
+          {
+            "node": "LOG REQUEST GET",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "generador de chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postmarkdown": {
+      "main": [
+        [
+          {
+            "node": "get markdown",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "log de llama parse POST",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Eliminar contenido clase_a": {
+      "main": [
+        []
+      ]
+    },
+    "generador de chunks": {
+      "main": [
+        [
+          {
+            "node": "resumen de los chunks por clase",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Enrutador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "eliminar contenido clase_b": {
+      "main": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Union de Qdrant": {
+      "main": [
+        [
+          {
+            "node": "Code para resumir la ingesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code para resumir la ingesta": {
+      "main": [
+        [
+          {
+            "node": "Log de Ingesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Log de Ingesta": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data de Clase_b": {
+      "ai_document": [
+        [
+          {
+            "node": "Coleccion clase b",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings clase_b": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Coleccion clase b",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings clase_a": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Coleccion_clase_a",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data_clase_a": {
+      "ai_document": [
+        [
+          {
+            "node": "Coleccion_clase_a",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data_clase_c": {
+      "ai_document": [
+        [
+          {
+            "node": "Coleccion clase c",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings clase_c": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Coleccion clase c",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrutador": {
+      "main": [
+        [
+          {
+            "node": "Coleccion_clase_a",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Coleccion clase b",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Coleccion clase c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "resumen de los chunks por clase": {
+      "main": [
+        [
+          {
+            "node": "Chunks Generados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If para ver si viene un @": {
+      "main": [
+        [
+          {
+            "node": "Code javscript",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code para traer lo que se ingresa en el chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code para traer lo que se ingresa en el chat": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post para modelo bert": {
+      "main": [
+        [
+          {
+            "node": "Aplicar filtros",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aplicar filtros": {
+      "main": [
+        [
+          {
+            "node": "Enrutador1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enrutador1": {
+      "main": [
+        [
+          {
+            "node": "Clase_a",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clase_b",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Clase_c",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clase_a": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clase_b": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clase_c": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trae los datos del Historial": {
+      "main": [
+        [
+          {
+            "node": "Codigo para limpiar el resumen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Codigo para limpiar el resumen": {
+      "main": [
+        [
+          {
+            "node": "Envio al correo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code javscript": {
+      "main": [
+        [
+          {
+            "node": "Trae los datos del Historial",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Delete rows or columns from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings HuggingFace Inference": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Post para modelo bert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Cohere": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "51f551d0-c770-4865-a782-4cbfcfecc87d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "56a9a0a51fd4d65be65e4902242f43ed7aeb270399d77d3d1f42600cf858b5bc"
+  },
+  "nodeGroups": [],
+  "id": "jPvi8bcKHMF12Oji",
+  "tags": []
+}
